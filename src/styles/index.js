@@ -15,7 +15,8 @@ export const FormBox = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
-  border: solid 4px gray;
+  border: solid 4px;
+  border-color: ${props => props.selected ? 'gray' : 'lightgray'};
   height: 175px;
   width: 200px;
   border-radius: 10px;
@@ -25,7 +26,7 @@ export const FormBox = styled.div`
 export const FormTitle = styled.div`
   height: 50px;
   width: 100%;
-  background-color: gray;
+  background-color: ${props => props.selected ? 'gray' : 'lightgray'};
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
