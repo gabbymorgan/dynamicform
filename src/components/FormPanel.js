@@ -67,9 +67,9 @@ class FormPanel extends Component {
             disabled={!selected}
             value={children}
           >
-            <option value="0">1</option>
-            <option value="1">2</option>
-            <option value="2">3</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
 
           </select>
         </FormField>
