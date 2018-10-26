@@ -23,6 +23,7 @@ const initialState = {
       children: "0",
     },
   },
+  saved: false,
 }
 
 export default (state = initialState, action) => {
@@ -61,7 +62,15 @@ export default (state = initialState, action) => {
         }
       }
       case types.LOAD_STATE:
-        return action.savedState;
+        return {
+          ...action.savedState,
+          saved: false,
+        }
+      case types.SAVE_STATE:
+        return {
+          ...state,
+          saved: true,
+        }
     default:
       return state
   }

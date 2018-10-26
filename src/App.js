@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Row } from './styles';
+import { Container, Row, Button } from './styles';
 import FormPanel from './components/FormPanel';
 import { loadState, saveState } from './actions';
 
@@ -27,7 +27,8 @@ class App extends Component {
           ))}
         </Row>
         <Row>
-          <button onClick={() => this.submitHandler()}>Submit</button>
+          <Button onClick={() => this.submitHandler()}>Submit</Button>
+          <p>{this.props.saved ? 'Saved!' : 'Click to save.'}</p>
         </Row>
       </Container>
     );
@@ -36,6 +37,7 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   rooms: state.rooms,
+  saved: state.saved,
   store: state,
 });
 

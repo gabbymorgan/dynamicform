@@ -46,3 +46,13 @@ export const CheckBox = styled.input`
   background-color: #eee;
   display: ${props => props.hide ? 'none' : 'block'};
 `;
+
+export const Button = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  width: 100px;
+  height: 40px;
+  background-color: gray;
+  margin: 0 2% 0 2%;
+`;
