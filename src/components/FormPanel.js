@@ -2,36 +2,77 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { FormBox, FormField, FormTitle, CheckBox } from '../styles';
-import { selectRoom, deselectRoom } from '../actions';
+import { selectRoom, deselectRoom, updateOccupants } from '../actions';
 
 class FormPanel extends Component {
-  state = {
-    isSelected: false,
+  toggleSelect() {
+    const { currentRoom, roomNumbers, currentRoomNumber } = this.props;
+    const { selected } = currentRoom;
+    if (selected) {
+      roomNumbers.forEach(roomNumber => {
+        if (roomNumber >= parseInt(currentRoomNumber)) {
+          this.props.deselectRoom(roomNumber);
+        }
+      });
+    }
+    else {
+      roomNumbers.forEach(roomNumber => {
+        if (roomNumber <= parseInt(currentRoomNumber)) {
+          this.props.selectRoom(roomNumber);
+        }
+      });
+    }
   }
 
-  componentDidMount() {
-    const { selectedRooms, roomNumber } = this.props;
-    const isSelected = selectedRooms[roomNumber];
-    this.setState({
-      isSelected,
-    })
-  }
-
-  select() {
-    this.state.isSelected
-      ? this.props.deselectRoom(this.props.roomNumber)
-      : this.props.selectRoom(this.props.roomNumber);
+  updateSelection(event) {
+    const { updateOccupants, currentRoomNumber } = this.props;
+    const { name, value } = event.target;
+    updateOccupants(currentRoomNumber, name, value);
   }
 
   render() {
+    const {
+      selected,
+      adults,
+      children,
+    } = this.props.currentRoom
     return (
-      <FormBox>
-        <FormTitle>
-          <CheckBox onClick={() => this.toggleSelect()}/>
-            <h4>Room {this.props.roomNumber}</h4>
+      <FormBox selected={selected} >
+        <FormTitle selected={selected}>
+          <CheckBox
+            type='checkbox'
+            checked={selected}
+            onChange={() => this.toggleSelect()}
+            hide={this.props.currentRoomNumber === '1'}
+          />
+          <h4>Room {this.props.currentRoomNumber}</h4>
         </FormTitle>
         <FormField>
           <p>Adults (18+)</p>
+          <select
+            name="adults"
+            onChange={this.updateSelection.bind(this)}
+            disabled={!selected}
+            value={adults}
+          >
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </FormField>
+        <FormField>
+          <p>Children (0-17)</p>
+          <select
+            name="children"
+            onChange={this.updateSelection.bind(this)}
+            disabled={!selected}
+            value={children}
+          >
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+
+          </select>
         </FormField>
       </FormBox>
     );
@@ -39,7 +80,7 @@ class FormPanel extends Component {
 }
 
 const mapStateToProps = state => ({
-  selectedRooms: state.selectedRooms
+  rooms: state.rooms
 });
 
-export default connect(mapStateToProps, { selectRoom, deselectRoom })(FormPanel);
+export default connect(mapStateToProps, { selectRoom, deselectRoom, updateOccupants })(FormPanel);
