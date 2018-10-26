@@ -1,28 +1,25 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { connect } from 'react-redux';
+import { Container } from './styles';
+import FormPanel from './components/FormPanel';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Container>
+        {Object.keys(this.props.rooms).map(roomNumber => (
+          <FormPanel
+            index={roomNumber}
+            roomNumber={roomNumber}
+          />
+        ))}
+      </Container>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  rooms: state.rooms,
+});
+
+export default connect(mapStateToProps)(App);
