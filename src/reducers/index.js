@@ -34,7 +34,7 @@ export default (state = initialState, action) => {
         rooms: {
           ...state.rooms,
           [action.roomNumber]: {
-            ...initialState.rooms[action.roomNumber],
+            ...state.rooms[action.roomNumber],
             selected: true,
           }
         }
